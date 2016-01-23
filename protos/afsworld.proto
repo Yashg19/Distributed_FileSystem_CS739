@@ -1,0 +1,204 @@
+// Copyright 2015, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//     * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//     * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//     * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+syntax = "proto3";
+
+option java_package = "afs.grpc";
+option objc_class_prefix = "HLW";
+
+package afsworld;
+
+// The afs service definition.
+service AfsWorldService {
+
+  rpc SendText (StringMessage) returns (StringMessage) {}
+  rpc RmDir (RmDirRequest) returns (RmDirResponse) {}
+  rpc GetAttr (GetAttrRequest) returns (GetAttrResponse) {}
+  rpc MkDir (MkDirRequest) returns (MkDirResponse) {}
+  rpc ReadDir (ReadDirMessage) returns (ReadDirResponse) {}
+  rpc MkNod (MkNodRequest) returns (MkNodResponse) {}
+  rpc GetFile (GetFileRequest) returns (GetFileResponse) {}
+  rpc OpenFile (OpenRequest) returns (OpenResponse) {}
+  rpc ReadFile (ReadRequest) returns (ReadResponse) {}
+  rpc WriteFile (WriteRequest) returns (WriteResponse) {}
+  rpc UTime (UTimeRequest) returns (UTimeResponse) {}
+  rpc RenameFile (RenameRequest) returns (RenameResponse) {}
+  rpc WriteFullFile (WriteFileRequest) returns (WriteFileResponse) {}
+  rpc AccessFile(AccessRequest) returns (AccessResponse) {}
+  rpc Unlink (UnlinkRequest) returns (UnlinkResponse) {}
+
+}
+
+message StringMessage {
+  bytes stringmessage = 1;
+}
+
+message GetAttrRequest {
+  string path = 1;
+}
+
+message GetAttrResponse {
+  int64 dev = 1;
+  int64 ino = 2;
+  int32 mode = 3;
+  int64 nlink = 4;
+  int32 uid = 5;
+  int32 gid = 6;
+  int64 rdev = 7;
+  int64 size = 8;
+  int64 atime = 9;
+  int64 mtime = 10;
+  int64 ctime = 11;
+  int64 blksize = 12;
+  int64 blocks = 13;
+  int32 res = 14;
+}
+
+message ReadDirMessage {
+  string path = 1;
+}
+
+message ReadDirResponse {
+  repeated int64 inodenumber = 1;
+  repeated int32 type = 2;
+  repeated string name = 3;
+}
+
+message RmDirRequest {
+  string path = 1;
+}
+
+message RmDirResponse {
+  int32 res = 1;
+}
+
+message ReadRequest {
+  string path = 1;
+  int64 size = 2;
+  int64 offset = 3;
+}
+
+message ReadResponse {
+  string buf = 1;
+  int32 res = 2;
+}
+
+message MkDirRequest {
+  string path = 1;
+  int32 mode = 2;
+}
+
+message MkDirResponse {
+  int32 res = 1;
+}
+
+message WriteFileRequest {
+  bytes buf = 1;
+  int64 size = 2;
+  string path = 3;
+}
+
+message WriteFileResponse {
+  int32 res = 1;
+}
+
+message MkNodRequest {
+  string path = 1;
+  int32 mode = 2;
+  int64 rdev = 3;
+}
+
+message MkNodResponse {
+  int32 res = 1;
+}
+
+message GetFileRequest {
+  string path = 1;
+}
+
+message GetFileResponse {
+  bytes buf = 1;
+  int32 res = 2;
+  int64 size = 3;
+}
+
+message OpenRequest {
+  string path = 1;
+  int32 flags = 2;
+}
+
+message OpenResponse {
+  int32 res = 1;
+}
+
+message UTimeRequest {
+  string path = 1;
+  
+}
+
+message UTimeResponse {
+  int32 res = 1;
+}
+
+message WriteRequest {
+  string path = 1;
+  string buf = 2;
+  int64 size = 3;
+  int64 offset = 4;
+}
+
+message WriteResponse {
+  int32 res = 1;
+}
+
+message AccessRequest {
+  string path = 1;
+  int32 mask = 2;
+}
+
+message AccessResponse {
+  int32 res = 1;
+}
+
+message UnlinkRequest {
+  string path = 1;  
+}
+
+message UnlinkResponse {
+  int32 res = 1;
+}
+
+message RenameRequest {
+  string toName = 1;
+  string fromName = 2;
+}
+
+message RenameResponse {
+  int32 res = 1;
+}
